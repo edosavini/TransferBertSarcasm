@@ -1,0 +1,42 @@
+{
+  "random_seed": 21016,
+  "pytorch_seed": 2335,
+  "numpy_seed": 7005,
+    "dataset_reader": {
+        "type": "mishra_reader",
+        "bert_model_name": "bert-base-uncased",
+        "token_indexers": {
+            "bert": {
+                "type": "bert-pretrained",
+                "pretrained_model": "bert-base-uncased"
+            }
+        }
+    },
+    "iterator": {
+        "type": "bucket",
+        "batch_size": 8,
+        "sorting_keys": [
+            [
+                "quote_response",
+                "num_tokens"
+            ]
+        ]
+    },
+    "model": {
+        "type": "bert_classifier",
+        "bert_model_name": "bert-base-uncased"
+    },
+    "train_data_path": "data/Train1.csv",
+    "validation_data_path": "data/Val1.csv",
+    "test_data_path": "data/Test1.csv",
+    "trainer": {
+        "num_epochs": 30,
+        "optimizer": {
+            "type": "adagrad",
+            "lr": 0.0001
+        },
+        "patience": 3,
+        "validation_metric": "+average_F1"
+    },
+    "evaluate_on_test": true
+}

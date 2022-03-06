@@ -1,0 +1,50 @@
+{
+    "random_seed": 21016,
+    "pytorch_seed": 2335,
+    "numpy_seed": 7005,
+    "dataset_reader": {
+        "type": "emo_reader",
+        "bert_model_name": "bert-base-uncased",
+        "token_indexers": {
+            "bert": {
+                "type": "bert-pretrained",
+                "pretrained_model": "bert-base-uncased"
+            }
+        }
+    },
+    "iterator": {
+        "type": "bucket",
+        "batch_size": 16,
+        "sorting_keys": [
+            [
+                "quote_response",
+                "num_tokens"
+            ]
+        ]
+    },
+    "model": {
+        "type": "bert_classifier",
+        "bert_model_name": "bert-base-uncased",
+        "text_field_embedder": {
+            "bert": {
+                "type": "bert-pretrained",
+                "pretrained_model": "bert-base-uncased"
+            }
+        }
+    },
+    "train_data_path": "data/EmoTrain1.tsv",
+    "validation_data_path": "data/EmoVal1.tsv",
+    "test_data_path": "data/EmoTest1.tsv",
+    "trainer": {
+//        "cuda_device": 15,
+        "grad_clipping": 5,
+        "num_epochs": 30,
+        "optimizer": {
+            "type": "adam",
+            "lr": 2e-05
+        },
+        "patience": 3,
+        "validation_metric": "+average_F1"
+    },
+    "evaluate_on_test": true
+}
